@@ -1,0 +1,41 @@
+@import './variables.css';
+
+.card {
+    background-color: rgb(226, 226, 226);
+    max-height: 95vh;
+    width: 40%;
+    display: grid;
+    grid-template-columns: 1fr 0.7fr;
+    grid-template-rows: 0.5fr 1fr 1fr;
+    gap: 3em;
+    padding: 3rem;
+}
+
+.card-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    text-transform: uppercase;
+    color: grey;
+}
+
+.name-title {
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+.profile-img {
+    max-height: 200px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+}
+
+.text-right {
+    text-transform: uppercase;
+    min-width: 12vw;
+    text-align: right;
+}
