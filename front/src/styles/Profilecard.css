@@ -1,41 +1,81 @@
-@import './variables.css';
+@import "./variables.css";
+
+.card-gradient {
+	--s: 100px; /* control the size */
+	--c1: var(--background);
+	--c2: #afafaf;
+	--c3: #d9d9d9;
+
+	--_g: var(--c3) 0 120deg, #0000 0;
+	background: linear-gradient(
+			0deg,
+			rgba(175, 175, 175, 0.7),
+			rgb(229, 233, 220) 80%
+		),
+		conic-gradient(from -60deg at 50% calc(100% / 3), var(--_g)),
+		conic-gradient(from 120deg at 50% calc(200% / 3), var(--_g)),
+		conic-gradient(
+			from 60deg at calc(200% / 3),
+			var(--c3) 60deg,
+			var(--c2) 0 120deg,
+			#0000 0
+		),
+		conic-gradient(
+			from 180deg at calc(100% / 3),
+			var(--c1) 60deg,
+			var(--_g)
+		),
+		linear-gradient(
+			90deg,
+			var(--c1) calc(100% / 6),
+			var(--c2) 0 50%,
+			var(--c1) 0 calc(500% / 6),
+			var(--c2) 0
+		);
+	background-size: cover, calc(1.732 * var(--s)) var(--s),
+		calc(1.732 * var(--s)) var(--s), calc(1.732 * var(--s)) var(--s),
+		calc(1.732 * var(--s)) var(--s), calc(1.732 * var(--s)) var(--s);
+}
 
 .card {
-    background-color: rgb(226, 226, 226);
-    max-height: 95vh;
-    width: 40%;
-    display: grid;
-    grid-template-columns: 1fr 0.7fr;
-    grid-template-rows: 0.5fr 1fr 1fr;
-    gap: 3em;
-    padding: 3rem;
+    background-color: grey;
+    margin-top: 15px;
+	max-height: 80%;
+	width: 30%;
+	display: grid;
+	grid-template-columns: 1fr 0.7fr;
+	grid-template-rows: 0.5fr 1fr 1fr;
+	gap: 3em;
+	padding: 3rem;
+    border-radius: 15px;
 }
 
 .card-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .title {
-    text-transform: uppercase;
-    color: grey;
+    font-weight: bold;
+	text-transform: uppercase;
+	color: grey;
 }
 
 .name-title {
-    font-size: 28px;
-    text-transform: uppercase;
+	font-size: 28px;
+	text-transform: uppercase;
 }
 
-.profile-img {
-    max-height: 200px;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
+.profile-img-card {
+	max-height: 200px;
+	aspect-ratio: 1/1;
+	border-radius: 50%;
 }
 
 .text-right {
-    text-transform: uppercase;
-    min-width: 12vw;
-    text-align: right;
+	text-transform: uppercase;
+	min-width: 12vw;
+	text-align: right;
 }

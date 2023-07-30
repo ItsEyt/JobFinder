@@ -5,12 +5,16 @@ const Sidebar = () => {
 	const navigate = useNavigate();
 
 	return (
-		<div>
-			<img
-				onClick={() => navigate("/profile")}
-				src="https://picsum.photos/200/301"
-				alt="..."
-			/>
+		<div className="sidebar">
+			<div className="profile-info-side">
+                <span>your name</span>
+				<img
+					className="profile-img-side"
+					onClick={() => navigate("/profile")}
+					src="https://picsum.photos/250/250"
+					alt="..."
+				/>
+			</div>
 		</div>
 	);
 };
