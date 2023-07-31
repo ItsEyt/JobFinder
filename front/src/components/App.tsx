@@ -12,13 +12,7 @@ function App() {
     const [hiddenMenu, setHiddenMenu] = useState(true)
     
 	const [isLogged, setIsLogged] = useState<boolean>(
-		localStorage.getItem("accessToken") &&
-			jwt_decode<JwtPayload>(localStorage.getItem("accessToken")!)?.exp! *
-				1000 -
-				Date.now() >
-				0
-			? true
-			: false
+
 	);
 
 	return (
@@ -29,7 +23,7 @@ function App() {
 				<Route
 					path="/login"
 					element={
-						<Login isLogged={isLogged} setIsLogged={setIsLogged} />
+						<Login />
 					}
 				/>
                 <Route path="/register" element={<Register/>} />

@@ -96,10 +96,26 @@
 .profile {
 	position: relative;
 	background-color: rgb(226, 226, 226);
-	width: 40%;
+	width: 30%;
+	max-height: 80%;
+	margin-top: 15px;
+	border-radius: 15px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	overflow: hidden;
+}
+
+.profile-name-container {
+	display: flex;
+    width: 100%;
+	justify-content: center;
+	position: relative;
+}
+.profile-name-container > .btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .profile > img {
@@ -130,16 +146,16 @@
 }
 
 .profile-info-side {
-    padding: 15px 0;
+	padding: 15px 0;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	cursor: pointer;
-    border-radius: 100px;
+	border-radius: 100px;
 }
 
 .profile-info-side:hover {
-    background: rgba(175,175,175,0.5);
+	background: rgba(175, 175, 175, 0.5);
 }
 
 .profile-img-side {
@@ -149,27 +165,27 @@
 }
 
 .decision-plate {
-    position: absolute;
-    bottom: 120px;
-    width: 30%;
-    display: flex;
-    justify-content: space-evenly;
+	position: absolute;
+	bottom: 120px;
+	width: 30%;
+	display: flex;
+	justify-content: space-evenly;
 }
 
 .decision {
-    border: none;
-    width: 8rem;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    color: whitesmoke;
-    font-size: 24px;
-    font-weight: bolder;
+	border: none;
+	width: 8rem;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	color: whitesmoke;
+	font-size: 24px;
+	font-weight: bolder;
 }
 
 .decision.reject {
-    background-color: red;
+	background-color: red;
 }
 
 .decision.accept {
-    background-color: green;
+	background-color: green;
 }

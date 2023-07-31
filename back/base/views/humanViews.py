@@ -1,8 +1,8 @@
 from django.http import JsonResponse
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import APIException
-
 from ..serializers import HumanSerializer
 from ..models import Human
 
@@ -16,7 +16,7 @@ def getHuman(request, id=None):
             print(HumanSerializer.fullSerializer(humanToGet))
             return JsonResponse(HumanSerializer.fullSerializer(humanToGet), safe=False)
         except:
-            return JsonResponse({"fuck":"shit"})
+            return Response(f"failed to retrieve Human, id = {id} ", 500)
         
 
 @api_view(['POST'])

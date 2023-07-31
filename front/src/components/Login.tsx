@@ -1,23 +1,26 @@
 import "../styles/login.css"
 import { useState } from "react";
 import axios from "axios";
-const Login = (props: {isLogged: boolean, setIsLogged: React.Dispatch<React.SetStateAction<boolean>>}) => {
+import { useAppDispatch, useAppSelector } from "../../apps/hooks";
+import { isLogged, loginUser } from "../features/UserManagementSlice";
+const Login = () => {
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
-    
+    const dispatch = useAppDispatch() 
+    const isLoggedIn = useAppSelector(isLogged)
 
-	const tryLogin = async () => {
-		await axios
-			.post("http://127.0.0.1:8000/login/", {
-				username,
-				password,
-			})
-			.then((response) => {
-				localStorage.setItem("accessToken", response.data.access);
-				props.setIsLogged(true);
-			})
-			.catch((err) => console.log(err));
-	};
+	// const tryLogin = async () => {
+	// 	await axios
+	// 		.post("http://127.0.0.1:8000/login/", {
+	// 			username,
+	// 			password,
+	// 		})
+	// 		.then((response) => {
+	// 			localStorage.setItem("accessToken", response.data.access);
+	// 			props.setIsLogged(true);
+	// 		})
+	// 		.catch((err) => console.log(err));
+	// };
 
 	let LoginForm = (
 		<div className="log-wrap">
@@ -36,7 +39,7 @@ const Login = (props: {isLogged: boolean, setIsLogged: React.Dispatch<React.SetS
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				<button className="btn" onClick={() => tryLogin()}>
+				<button className="btn" onClick={() => dispatch(loginUser({username, password}))}>
 					Login
 				</button>
 				<a href="https://www.google.com">
@@ -46,7 +49,7 @@ const Login = (props: {isLogged: boolean, setIsLogged: React.Dispatch<React.SetS
 		</div>
 	);
 
-	return <>{props.isLogged ? <h1>logged</h1> : LoginForm};</>
+	return <>{isLoggedIn ? <h1>logged</h1> : LoginForm};</>
 };
 
 export default Login;
