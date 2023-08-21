@@ -3,62 +3,48 @@ from rest_framework.serializers import ModelSerializer
 
 
 class UserSerializer(ModelSerializer):
+
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ('_id', 'username', 'is_company', 'is_admin')
+
+
+class FullUserSerializer(ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('_id', 'email', 'username', 'password', 'is_company', 'is_admin')
+
 
 class HumanSerializer(ModelSerializer):
+    user = UserSerializer(read_only=True, many=False)
+
     class Meta:
         model = Human
-        fields = '__all__'
+        fields = ('_id', 'first_name', 'last_name', 'image', 'skills', 'is_active', 'user')
 
-    def fullSerializer(self):
-        return {
-            "_id": self._id,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "image": self.image.url,
-            "connections": ConnectionSerializer(self.connections, many=True).data,
-            "skills": self.skills,
-            "is_active": self.is_active,
-            "user": UserSerializer(self.user).data
-        }
 
 class CompanySerializer(ModelSerializer):
+    user = UserSerializer(read_only=True, many=False)
+
     class Meta:
         model = Company
-        fields = '__all__'
+        fields = ('_id', 'image', 'name', 'user')
 
-    def FullSerializer(self):
-        return {
-            "_id": self._id,
-            "name": self.name,
-            "user": UserSerializer(self.user).data,
-            "image": self.image.url,
-        }
-    
-class JobSerializer(ModelSerializer):
-    class Meta:
-        model = Job
-        fields = "__all__"
 
-    def FullSerializer(self):
-        return {
-            "company": self.company,
-            "title": self.title,
-            "preffered_skills": self.preffered_skills,
-            "connections": ConnectionSerializer.fullSerializer(self.connections, many=True)
-        }
-    
 class ConnectionSerializer(ModelSerializer):
+    # company = CompanySerializer()
+    human = HumanSerializer(read_only=True, many=False)
+
     class Meta:
         model = Connection
-        fields = "__all__"
+        fields = ('id', 'did_human_accept', 'did_job_accept', 'human')
 
-    def fullSerializer(self):
-        return {
-            "human": HumanSerializer.fullSerializer(self.human),
-            "didHumanAccept": self.didHumanAccept,
-            "toConnectWith": CompanySerializer.FullSerializer(self.toConnectWith),
-            "didJobAccept": self.didJobAccept
-        }
+
+class JobSerializer(ModelSerializer):
+    company_to_job = ConnectionSerializer(many=True, read_only=True)
+    company = CompanySerializer(many=False, read_only=True)
+
+    class Meta:
+        model = Job
+        fields = ('_id', 'title', 'company', 'preferred_skills', 'company_to_job')

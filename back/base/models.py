@@ -21,7 +21,6 @@ class Human(models.Model):
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     image = models.ImageField(upload_to="pfpHuman", default="placeholderHuman.png")
-    connections = models.ManyToManyField('Job', through="Connection")
     skills = models.JSONField(default=dict, blank=True)
     is_active = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -38,15 +37,21 @@ class Company(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="pfpCompany", default="placeholderCompany.png")
 
+    def __str__(self):
+        return self.name
+
 class Job(models.Model):
+    _id = models.BigAutoField(primary_key=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     title = models.CharField(max_length=30, blank=False)
-    preffered_skills = models.JSONField(default=dict)
-    connections = models.ManyToManyField('Human', through="Connection")
-
+    preferred_skills = models.JSONField(default=dict)
+    connections = models.ManyToManyField('Human', through="Connection", related_name = 'job_human')
+    
+    def __str__(self):
+        return f'{self.title} - {self.company.name}'
 
 class Connection(models.Model):
-    Human = models.ForeignKey(Human, on_delete=models.CASCADE, related_name='own_id', default='')
-    didHumanAccept = models.BooleanField()
-    toConnectWith = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='connect_with_id', default='')
-    didJobAccept = models.BooleanField()
+    company = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='company_to_job')
+    human = models.ForeignKey(Human, on_delete=models.CASCADE, related_name='human_to_job')
+    did_human_accept = models.BooleanField(default=False)
+    did_job_accept = models.BooleanField(default=False)
